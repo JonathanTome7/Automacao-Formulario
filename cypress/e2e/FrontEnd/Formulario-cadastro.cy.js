@@ -7,7 +7,6 @@ describe('Criar Conta', () => {
     beforeEach(() => {
         cy.visit('formulario-cadastro/');
     } )
-
     it('Deve preencher o Formulário com sucesso', () => {
         cy.preencherFormulario({ genero: 'Masculino', aceitarTermo: true });
 
