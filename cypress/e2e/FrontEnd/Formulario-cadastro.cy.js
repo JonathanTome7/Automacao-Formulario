@@ -9,157 +9,62 @@ describe('Criar Conta', () => {
     } )
 
     it('Deve preencher o Formulário com sucesso', () => {
-    
-        cy.get('[data-testid="input-nome"]'). type(faker.person.fullName());
-        cy.get('[data-testid="input-email"]').type(faker.internet.email());
-        cy.get('[data-testid="input-telefone"]').type('61986610705');
-        cy.get('[data-testid="input-nascimento"]').type('01072000');
-        cy.get('.genero-opcoes > :nth-child(1) > input'). click ();
-        cy.get('[data-testid="input-comentario"]').type('Um cmentario aaahhhhh');
-        cy.get('[data-testid="input-senha"]') .type('123456');
-        cy.get('.checkbox-label > input').click();
-        cy.get('[data-testid="btn-submit"]') .click();
-        cy.get('.success-message').should('contain.text', 'Cadastro realizado com sucesso!');
+        cy.preencherFormulario({ genero: 'Masculino', aceitarTermo: true });
 
-});
+        cy.get('.success-message').should('have.text', '✅ Cadastro realizado com sucesso!');
+    });
 
     it('Campo nome deve ser obrigatório', () => {
-        
-        cy.get('[data-testid="input-nome"]'). type(faker.person.fullName());
-        cy.get('[data-testid="input-email"]').type(faker.internet.email());
-        cy.get('[data-testid="input-telefone"]').type('61986610705');
-        cy.get('[data-testid="input-nascimento"]').type('01072000');
-        cy.get('.genero-opcoes > :nth-child(1) > input'). click ();
-        cy.get('[data-testid="input-comentario"]').type('Um cmentario aasddddaasdsadsadsadasdasdasdaahhhhh');
-        cy.get('[data-testid="input-senha"]') .type('123456');
-        cy.get('.checkbox-label > input').click();
-        cy.get('[data-testid="btn-submit"]') .click();
-        cy.get('.success-message').should('contain.text', 'Cadastro realizado com sucesso!');
+        cy.preencherFormulario({ nome: '{selectall}{backspace}' });
+        cy.get('.error-message').should('contain', 'Nome é obrigatório');
+    });
 
 
-    })
+
     it('Campo email deve ser obrigatório', () => {
-        
-        cy.get('[data-testid="input-nome"]'). type(faker.person.fullName());
-        cy.get('[data-testid="input-email"]').type(faker.internet.email());
-        cy.get('[data-testid="input-telefone"]').type('61986610705');
-        cy.get('[data-testid="input-nascimento"]').type('01072000');
-        cy.get('.genero-opcoes > :nth-child(1) > input'). click ();
-        cy.get('[data-testid="input-comentario"]').type('Um cmentario aasddddaasdsadsadsadasdasdasdaahhhhh');
-        cy.get('[data-testid="input-senha"]') .type('123456');
-        cy.get('.checkbox-label > input').click();
-        cy.get('[data-testid="btn-submit"]') .click();
-        cy.get('.success-message').should('contain.text', 'Cadastro realizado com sucesso!');
+        cy.preencherFormulario({ email: '{selectall}{backspace}' });
+        cy.get('.error-message').should('contain', 'Email inválido');
+    });
+
+    it('Campo telefone deve ser obrigatório', () => {
+        cy.preencherFormulario({ telefone: '{selectall}{backspace}' });
+        cy.get('.error-message').should('contain', 'Telefone é obrigatório');
+    });
 
 
-    })
-
-    it('Campo data de nascimento deve ser obrigatório', () => {
-        
-        cy.get('[data-testid="input-nome"]'). type(faker.person.fullName());
-        cy.get('[data-testid="input-email"]').type(faker.internet.email());
-        cy.get('[data-testid="input-telefone"]').type('61986610705');
-        cy.get('[data-testid="input-nascimento"]').type('01072000');
-        cy.get('.genero-opcoes > :nth-child(1) > input'). click ();
-        cy.get('[data-testid="input-comentario"]').type('Um cmentario aasddddaasdsadsadsadasdasdasdaahhhhh');
-        cy.get('[data-testid="input-senha"]') .type('123456');
-        cy.get('.checkbox-label > input').click();
-        cy.get('[data-testid="btn-submit"]') .click();
-        cy.get('.success-message').should('contain.text', 'Cadastro realizado com sucesso!');
-
-
-    })
     it('Campo gênero deve ser obrigatório', () => {
-        
-        cy.get('[data-testid="input-nome"]'). type(faker.person.fullName());
-        cy.get('[data-testid="input-email"]').type(faker.internet.email());
-        cy.get('[data-testid="input-telefone"]').type('61986610705');
-        cy.get('[data-testid="input-nascimento"]').type('01072000');
-        cy.get('.genero-opcoes > :nth-child(1) > input'). click ();
-        cy.get('[data-testid="input-comentario"]').type('Um cmentario aasddddaasdsadsadsadasdasdasdaahhhhh');
-        cy.get('[data-testid="input-senha"]') .type('123456');
-        cy.get('.checkbox-label > input').click();
-        cy.get('[data-testid="btn-submit"]') .click();
-        cy.get('.success-message').should('contain.text', 'Cadastro realizado com sucesso!');
+        cy.preencherFormulario({ genero: undefined });
+        cy.get('.error-message').should('contain', 'Selecione um gênero');
+    });
+
+    it('Campo comentário deve aceitar até 250 caracteres', () => {
+        const texto = 'A'.repeat(253);
+        cy.preencherFormulario({ comentario: texto, genero: 'Masculino', aceitarTermo: true });
+        cy.get('[data-testid="input-comentario"]').invoke('val').should('have.length', 250);
+        cy.get('.success-message').should('have.text', '✅ Cadastro realizado com sucesso!');
+    });
 
 
-    })
-    it('Campo comentatio deve conter menos 250 caracteres', () => {
-        
-        cy.get('[data-testid="input-nome"]'). type(faker.person.fullName());
-        cy.get('[data-testid="input-email"]').type(faker.internet.email());
-        cy.get('[data-testid="input-telefone"]').type('61986610705');
-        cy.get('[data-testid="input-nascimento"]').type('01072000');
-        cy.get('.genero-opcoes > :nth-child(1) > input'). click ();
-        cy.get('[data-testid="input-comentario"]').type('Um cmentario aasddddaasdsadsadsadasdasdasdaahhhhh');
-        cy.get('[data-testid="input-senha"]') .type('123456');
-        cy.get('.checkbox-label > input').click();
-        cy.get('[data-testid="btn-submit"]') .click();
-        cy.get('.success-message').should('contain.text', 'Cadastro realizado com sucesso!');
-
-
-    })
     it('Campo senha deve ser obrigatório', () => {
-        
-        cy.get('[data-testid="input-nome"]'). type(faker.person.fullName());
-        cy.get('[data-testid="input-email"]').type(faker.internet.email());
-        cy.get('[data-testid="input-telefone"]').type('61986610705');
-        cy.get('[data-testid="input-nascimento"]').type('01072000');
-        cy.get('.genero-opcoes > :nth-child(1) > input'). click ();
-        cy.get('[data-testid="input-comentario"]').type('Um cmentario aasddddaasdsadsadsadasdasdasdaahhhhh');
-        cy.get('[data-testid="input-senha"]') .type('123456');
-        cy.get('.checkbox-label > input').click();
-        cy.get('[data-testid="btn-submit"]') .click();
-        cy.get('.success-message').should('contain.text', 'Cadastro realizado com sucesso!');
+        cy.preencherFormulario({ senha: '{selectall}{backspace}' });
+        cy.get('.error-message').should('contain', 'Senha é obrigatória');
+    });
 
+    it('Campo termo de uso deve ser obrigatório', () => {
+        cy.preencherFormulario({ aceitarTermo: false });
+        cy.get('.error-message').should('contain', 'Você deve aceitar os Termos de Uso e a Política de Privacidade');
+    });
 
-    })
-    it('Campo termo deve ser obrigatório', () => {
-        
-        cy.get('[data-testid="input-nome"]'). type(faker.person.fullName());
-        cy.get('[data-testid="input-email"]').type(faker.internet.email());
-        cy.get('[data-testid="input-telefone"]').type('61986610705');
-        cy.get('[data-testid="input-nascimento"]').type('01072000');
-        cy.get('.genero-opcoes > :nth-child(1) > input'). click ();
-        cy.get('[data-testid="input-comentario"]').type('Um cmentario aasddddaasdsadsadsadasdasdasdaahhhhh');
-        cy.get('[data-testid="input-senha"]') .type('123456');
-        cy.get('.checkbox-label > input').click();
-        cy.get('[data-testid="btn-submit"]') .click();
-        cy.get('.success-message').should('contain.text', 'Cadastro realizado com sucesso!');
+    it('Validar o botão Limpar', () => {
 
+        cy.preencherFormulario({ nome: 'João da Silva' });
+        cy.get('[data-testid="btn-reset"]').should('be.visible').click();
+        cy.get('[data-testid="input-nome"]').should('have.value', '');
+    });
 
-    })
-    it('validar o botão limpar', () => {
-        
-        cy.get('[data-testid="input-nome"]'). type(faker.person.fullName());
-        cy.get('[data-testid="input-email"]').type(faker.internet.email());
-        cy.get('[data-testid="input-telefone"]').type('61986610705');
-        cy.get('[data-testid="input-nascimento"]').type('01072000');
-        cy.get('.genero-opcoes > :nth-child(1) > input'). click ();
-        cy.get('[data-testid="input-comentario"]').type('Um cmentario aasddddaasdsadsadsadasdasdasdaahhhhh');
-        cy.get('[data-testid="input-senha"]') .type('123456');
-        cy.get('.checkbox-label > input').click();
-        cy.get('[data-testid="btn-submit"]') .click();
-        cy.get('.success-message').should('contain.text', 'Cadastro realizado com sucesso!');
+    it('Não preencher nenhum campo obrigatório', () => {
 
-
-    })
-    it('Campo nome deve ser obrigatório', () => {
-        
-        cy.get('[data-testid="input-nome"]'). type(faker.person.fullName());
-        cy.get('[data-testid="input-email"]').type(faker.internet.email());
-        cy.get('[data-testid="input-telefone"]').type('61986610705');
-        cy.get('[data-testid="input-nascimento"]').type('01072000');
-        cy.get('.genero-opcoes > :nth-child(1) > input'). click ();
-        cy.get('[data-testid="input-comentario"]').type('Um cmentario aasddddaasdsadsadsadasdasdasdaahhhhh');
-        cy.get('[data-testid="input-senha"]') .type('123456');
-        cy.get('.checkbox-label > input').click();
-        cy.get('[data-testid="btn-submit"]') .click();
-        cy.get('.success-message').should('contain.text', 'Cadastro realizado com sucesso!');
-
-
-    })
-
-
-
+        cy.get('[data-testid="btn-submit"]').click();
+        cy.get('.error-message').should('have.length.at.least', 5);
+    });
 });
