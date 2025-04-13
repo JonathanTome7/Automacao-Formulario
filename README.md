@@ -18,7 +18,7 @@ npx cypress open
 npx cypress run
 
 
-#✅ O que está sendo testado
+## ✅ O que está sendo testado
 Abertura e carregamento correto da página
 
 Preenchimento de todos os campos do formulário com dados dinâmicos
@@ -31,7 +31,7 @@ Submissão do formulário
 
 Validação do comportamento esperado após o envio
 
-#💡 Tecnologias utilizadas
+## 💡 Tecnologias utilizadas
 Cypress — Framework de automação E2E
 
 JavaScript (ES6+)
