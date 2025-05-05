@@ -1,10 +1,12 @@
-# 🚀 Testes Automatizados com Cypress - Formulário de Cadastro
+# 🚀 Testes Automatizados com Cypress - (Frontend + Backend)
 
-Este repositório contém testes automatizados desenvolvidos com **Cypress** para validar o formulário disponível em:
+Este repositório contém testes automatizados desenvolvidos com Cypress para validar funcionalidades de um projeto completo com frontend e backend, conforme proposto no curso MasterClass Automation Live - Turma 1.
 
-🔗 [https://jamesonbatista.github.io/projectqatesterweb/cadastro-simples.html](https://jamesonbatista.github.io/projectqatesterweb/cadastro-simples.html)
+🔗 Frontend: https://alexandreti-aut.github.io/
+🔗 Backend: https://serverest.dev
 
-O projeto faz parte do **desafio da MasterClass Automation Live - Turma 1**, com foco na automação de testes frontend, garantindo a funcionalidade do processo de cadastro.
+O objetivo principal é garantir a qualidade das funcionalidades, tanto na camada de interface quanto nas requisições para a API RESTful, por meio de testes E2E e testes de API.
+
 
 ---
 
@@ -18,18 +20,22 @@ npx cypress open
 npx cypress run
 
 
-## ✅ O que está sendo testado
-Abertura e carregamento correto da página
+## ✅ Funcionalidades testadas
+Carregamento e funcionamento da aplicação frontend
 
-Preenchimento de todos os campos do formulário com dados dinâmicos
+Preenchimento de formulários com dados dinâmicos
 
-Seleção de estado e cidade
+Validação de campos obrigatórios
 
-Aceite dos termos e condições
+Interações com botões e mensagens de sucesso/erro
 
-Submissão do formulário
+Requisições e validações contra a API serverest.dev
 
-Validação do comportamento esperado após o envio
+Criação, listagem e exclusão de usuários
+
+Validação de tokens e autenticação
+
+Fluxo de cadastro e login de administradores e clientes
 
 ## 💡 Tecnologias utilizadas
 Cypress — Framework de automação E2E
